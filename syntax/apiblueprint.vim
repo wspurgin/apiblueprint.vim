@@ -16,7 +16,7 @@ syntax match apibParamDesc /\s\+-.*/ contained
 syntax match apibBracketedMeta /\[.*\]/ contained
 syntax region apibHeadingSection start=/^[#]{1,6}.*/  end=/^$/ contains=apibBracketedMeta
 
-syntax cluster markdownInline add=apibHeadersSectionValue,apibBracketedMeta
+syntax cluster markdownInline add=apibHeadingSection,apibBracketedMeta
 
 syntax region apibModelSection start=/^+ Model/ end=/$/ oneline
 syntax region apibRequestSection start=/^[-+*] [Rr]equest.*/ end=/^$/ contains=markdownCode,apibBracketedMeta,apibHTTPContentType
