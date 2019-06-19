@@ -6,17 +6,23 @@ syntax region apibMarkdownMetadata start=/\%^.*:.*$/ end=/^$/ contains=apibMarkd
 syntax match apibMarkdownMetadataKey /^[^:]*\ze:/ contained
 syntax match apibMarkdownMetadataValue /:.*/ contained
 
-syntax region apibHTTPStatusCode start=/\d\d\d/ end=// contained containedin=apibResponseSection
-syntax region apibHTTPContentType start=/(.*)/ end=// contained containedin=apibResponseSection
+syntax region apibHTTPStatusCode start=/\d\d\d/ end=// contained
+syntax region apibHTTPContentType start=/(.*)/ end=// contained
 
-syntax region apibHeadingSection start=/^[#]{1,6}.*/  end=/^$/ contains=apibBracketedMeta
+syntax match apibMSONIdentifier /\w\+\ze:/ contained
+syntax match apibMSONType /\s\+(\w\+\(,\s\+\w\+\)\?)/ contained
+syntax match apibParamDesc /\s\+-.*/ contained
+
 syntax match apibBracketedMeta /\[.*\]/ contained
+syntax region apibHeadingSection start=/^[#]{1,6}.*/  end=/^$/ contains=apibBracketedMeta
 
 syntax cluster markdownInline add=apibHeadersSectionValue,apibBracketedMeta
 
 syntax region apibModelSection start=/^+ Model/ end=/$/ oneline
-syntax region apibRequestSection start=/^[-+*] Request.*/ end=/^$/ contains=apibBracketedMeta,apibHTTPContentType
-syntax region apibResponseSection start=/^[-+*] Response \d\d\d/ end=/^$/ contains=apibHTTPStatusCode,apibHTTPContentType
+syntax region apibRequestSection start=/^[-+*] [Rr]equest.*/ end=/$/ contains=apibBracketedMeta,apibHTTPContentType
+syntax region apibResponseSection start=/^[-+*] [Rr]esponse \d\d\d/ end=/$/ contains=apibHTTPStatusCode,apibHTTPContentType
+syntax region apibResponseSection start=/^[-+*] Parameters.*/ end=/^$/ contains=markdownCode,apibMSONIdentifier,apibMSONType,apibParamDesc
+syntax region apibResponseSection start=/^[-+*] Schema / end=/^$/ contains=markdownCode
 syntax region apibHeadersSection start=/^+ Headers$/ end=/^\S.*$/ contains=apibHeadersSectionKey,apibHeadersSectionValue
 
 syntax region apibActionRelationKey start=/: .*/ end=/$/ contained
@@ -35,6 +41,9 @@ highlight default link apibHTTPContentType Delimiter
 highlight default link apibActionRelation Function
 highlight default link apibActionRelationKey Identifier
 highlight default link apibBracketedMeta Type
+highlight default link apibMSONIdentifier Identifier
+highlight default link apibMSONType Type
+highlight default link apibParamDesc Comment
 
 let b:current_syntax = 'apiblueprint'
 
