@@ -19,8 +19,8 @@ syntax region apibHeadingSection start=/^[#]{1,6}.*/  end=/^$/ contains=apibBrac
 syntax cluster markdownInline add=apibHeadersSectionValue,apibBracketedMeta
 
 syntax region apibModelSection start=/^+ Model/ end=/$/ oneline
-syntax region apibRequestSection start=/^[-+*] [Rr]equest.*/ end=/$/ contains=apibBracketedMeta,apibHTTPContentType
-syntax region apibResponseSection start=/^[-+*] [Rr]esponse \d\d\d/ end=/$/ contains=apibHTTPStatusCode,apibHTTPContentType
+syntax region apibRequestSection start=/^[-+*] [Rr]equest.*/ end=/^$/ contains=markdownCode,apibBracketedMeta,apibHTTPContentType
+syntax region apibResponseSection start=/^[-+*] [Rr]esponse \d\d\d/ end=/^$/ contains=markdownCode,apibHTTPStatusCode,apibHTTPContentType
 syntax region apibResponseSection start=/^[-+*] Parameters.*/ end=/^$/ contains=markdownCode,apibMSONIdentifier,apibMSONType,apibParamDesc
 syntax region apibResponseSection start=/^[-+*] Schema / end=/^$/ contains=markdownCode
 syntax region apibHeadersSection start=/^+ Headers$/ end=/^\S.*$/ contains=apibHeadersSectionKey,apibHeadersSectionValue
